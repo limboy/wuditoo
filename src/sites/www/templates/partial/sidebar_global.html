@@ -1,0 +1,11 @@
+{% if current_user %}
+{% include "sidebar_upload.html" %}
+{% include "sidebar_me.html" %}
+{% else %}
+{% include "sidebar_about.html" %}
+{% include "sidebar_login.html" %}
+
+{% end %}
+
+{% include 'sidebar_photos_nav.html' %}
+{% include 'sidebar_tags.html' %}

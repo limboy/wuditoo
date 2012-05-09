@@ -1,0 +1,87 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8" />
+	<meta content="True" name="HandheldFriendly" />
+	<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0; name='viewport'" />
+    <title>无敌兔 - 发现更美的世界{%block title%}{%end%}</title>
+	<link rel="stylesheet" type="text/css" media="screen"  href="/static/css/vendor/jquery.fancybox.css" />
+	<link rel="stylesheet" type="text/css" media="screen"  href="/static/css/main.css" />
+	<link rel="shortcut icon" href="/static/img/favicon.ico" />
+	<link rel="canonical" href="http://wuditoo.com/" />
+    <meta name="description" content="无敌兔 - 发现更美的世界" />
+	<script src="/static/js/vendor/jquery.min.js" type="text/javascript"></script>
+	<script src="/static/js/vendor/jquery.history.min.js" type="text/javascript"></script>
+	<script src="/static/js/vendor/jquery.fancybox.min.js" type="text/javascript"></script>
+	<script src="/static/js/vendor/jquery.scrollTo.min.js" type="text/javascript"></script>
+    {% block metadata %}{%end%}
+	<script src="/static/js/main.js" type="text/javascript"></script>
+</head>
+
+<!--[if IE 7 ]><body class="ie7"><![endif]-->
+<!--[if gt IE 7]><body class="ie"><![endif]-->
+<!--[if !IE]><body><![endif]--> 
+    <div id="header">
+		<div class="inner">
+			<div id="logo"><a href="/">无敌兔</a></div>
+            <div id="slogon">发现更美的世界</div>
+            <div id="witticism">{{home_sentence()}}</div>
+            <!--
+			<ul class="nav-right">
+			</ul>
+            -->
+		</div>
+    </div>
+
+    <div id="container">
+		<div class="inner">
+			{% set message = get_message() %}
+			{% for message_type in ('error', 'success', 'info', 'warn') %}
+				{% if message and message_type == message[0] %}
+				<div id="{{message_type}}-message" class="message alert alert-{{message_type}}">{{ message[1] }}</div>
+				{% else %}
+				<div id="{{message_type}}-message" class="message alert alert-{{message_type}} hide"></div>
+				{% end %}
+			{% end %}
+
+			{% block content %}{% end %}
+
+			<div id="main">
+				{% block main %}	
+				{% end %}
+			</div>
+			<div id="sidebar">
+				{% block sidebar %}
+				{% end %}
+			</div>
+		</div>
+    </div>
+
+    <div id="footer">
+        <div class="inner">
+            <div class="right">
+                <span class="belief">make the world a little better and easier</span>
+            </div>
+            <div class="left">
+                <ul>
+                    <li><a href="/about">关于</a> <!--<span class="divider">/</span>--></li>
+                    <!--<li><a href="/feedback">反馈</a> <span class="divider">/</span></li>-->
+                    <!--<li><a href="/blog">日志</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1281124-23']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+    <!-- love your mom! -->
+</body>
+    <meta name="description" content="无敌兔 - " />

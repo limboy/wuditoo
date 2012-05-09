@@ -1,0 +1,12 @@
+<div class="upload item {% if not current_user.left_upload_count %}disabled{% end %}" data-url="/photo/upload" data-title="采集照片" >
+    <div class="left"></div>
+    
+    <div class="center">
+        {% if current_user.left_upload_count %}
+        采集照片(本周还剩{{current_user.left_upload_count}}张)
+        {% else %}
+        本周的采集余额已用完了
+        {% end %}
+    </div>
+    <div class="right"></div>
+</div>

@@ -1,0 +1,174 @@
+{% set creator = photo.creator %}
+<div id="photo">
+    {# 如果不是单张照片，则显示左右箭头 #}
+    {% if not handler.get_argument('single', False) %}
+    <div class="left"></div>
+    <i class="hide icon-arrow-left"></i>
+    <div class="right"></div>
+    <i class="hide icon-arrow-right"></i>
+    {% end %}
+	<i class="icon-resize-full toggle-fullsize"></i>
+    <img src="{{get_photo_url(photo, 'l')}}" />
+</div>
+<div id="photo-extra">
+    <div class="user-info">
+        <div class="avatar">
+            <a href="/user/{{creator.username}}"><img src="{{get_avatar_url(creator, 's')}}" /></a>
+        </div>
+        <div class="user-meta">
+            <div>
+                <a href="/user/{{creator.username}}">{{creator.fullname}}</a>
+                <i class="icon-level{{creator.level}} level"></i>
+            </div>
+            {% if can_delete_photo(photo) %}
+            <div class="icon-delete"></div>
+            <div id="delete-photo-confirm" class="hide">
+                <button data-url="/photo/{{photo.id}}/delete" id="photo-delete" class="btn mini-btn danger-btn">删除</button> 
+                <a href="#" class="cancel">取消</a>
+            </div>
+            {% end %}
+            <p class="created">{{timesince(photo.created)}} {% if photo.page_source %}via <a href="{{ photo.page_source }}" target="_blank">{{get_host(photo.page_source)}}</a><i class="icon-anchor"></i>{%end%} </p>
+        </div>
+    </div>
+
+    <div class="like">
+        {% if current_user and current_user.id != photo.user_id %}
+        <a class="btn noneselectable" data-url="/photo/{{photo.id}}/like"><i class="icon-like{% if current_user and current_user.has_liked_photo(photo) %}d{% end %}-btn"></i>喜欢</a>
+        {% end %}
+        <span class="data"><span class="like-count">{{photo.likes_count}}</span> Likes / {{photo.views_count}} Views</span>
+    </div>
+
+    <div class="photo-content" id="photo-content">
+        <h3 class="title">
+            <span>{{photo.title}}</span>
+            {% if current_user and current_user.id == photo.user_id %}
+            <i class="icon-edit"></i>
+            {% end %}
+        </h3>
+        <p class="content">{% raw nl2br(escape(photo.content)) %}</p>
+    </div>
+
+    <div id="photo-content-edit" class="hide">
+        <form action="/photo/{{photo.id}}/update" method="POST">
+            <div class="input">
+                <input type="TEXT" name="title" value="{{photo.title}}" />
+            </div>
+            <div class="textarea">
+                <textarea name="content" rows="5">{{photo.content}}</textarea>
+            </div>
+            <div class="action">
+                <input type="SUBMIT" class="btn primary-btn mini-btn" value="更新" />
+                <a href="#" class="cancel">取消</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="bar noneselectable">
+        <i class="icon-slideup"></i>
+        <h4>参数</h4>
+    </div>
+
+    <ul class="param">
+    {% for key, val in photo_exif.items() %}
+        {% if key == 'Model' %}
+        <li>相机：{{val if val else u'未知'}}</li>
+        {% elif key == 'FocalLength' %}
+        <li>焦距：{{val+'mm' if val else u'未知'}}
+        </li>
+        {% elif key == 'FNumber' %}
+        <li>光圈：{{'F'+val if val else u'未知'}}
+        </li>
+        {% elif key == 'ExposureTime' %}
+        <li>快门：{{val+'s' if val else u'未知'}}</li>
+        {% elif key == 'ISOSpeedRatings' %}
+        <li>感光：{{val if val else u'未知'}}</li>
+        {% elif key == 'Lens' %}
+        <li>镜头：{{val if val else u'未知'}}</li>
+        {% end %}
+    {% end %}
+    </ul>
+
+    <div class="bar noneselectable">
+        <i class="icon-slideup"></i>
+        <h4 class="tag-header">标签</h4>
+        {% if current_user and photo.user_id == current_user.id %}
+        <div class="addtag" id="addtag">(<a href="#">add a tag</a>)</div>
+        {% end %}
+
+    </div>
+    <ul class="tag" id="tags">
+        {% for tag in photo_tags %}
+        <li>
+            <i class="icon-tag"></i> <a href="/tag/{{tag.tag}}">{{tag.tag}}</a>
+            {% if current_user and photo.user_id == current_user.id %}
+            <span class="close invisible" data-url="/photo/{{photo.id}}/tagremove/{{tag.id}}">×</span>
+            {% end %}
+        </li>
+        {% end %}
+    </ul>
+
+    <div class="tagadd hide" id="tagadd">
+        <form action="/photo/{{photo.id}}/tagadd" method="POST">
+            <input type="TEXT" name="tag" />
+            <input type="SUBMIT" class="btn primary-btn mini-btn" value="添加" />
+            <a href="#" class="cancel">取消</a>
+        </form>
+    </div>
+
+    {#
+    <div class="bar noneselectable">
+        <i class="icon-slideup"></i>
+        <h4>分享</h4>
+    </div>
+    <div id="share">
+        {% set page_url = handler.get_argument('url', handler.request.headers.get('referer')) %}
+        {% set share_url = "http://www.jiathis.com/send/?webid={0}&url="+page_url+"&title="+photo.title+"&pic="+get_photo_url(photo, 'l') %}
+        <p class="gray">本页链接：{{page_url}}</p>
+        <p class="gray">分享到：<a href="{{share_url.format('tsina')}}" target="_blank" class="btn mini-btn">新浪微博</a> <a target="_blank" href="{{share_url.format('tqq')}}" class="btn mini-btn">腾讯微博</a></p>
+    </div>
+    #}
+
+    <div class="bar noneselectable">
+        <i class="icon-slideup"></i>
+        <h4>评论</h4>
+    </div>
+    {% include 'comments.html' %}
+</div>
+
+<script type="text/javascript">
+$('.bar').photoToggleSidebarIcon()
+
+$('#photo-extra .like a').photoLike()
+
+$('#photo .left').photoPrev()
+
+$('#photo .right').photoNext()
+
+$('#comment-create form').photoCommentAdd()
+
+$('#comments').photoCommentHover()
+
+$('#photo-content .icon-edit').photoContentEdit()
+
+$('#photo-content-edit .cancel').photoContentCancelEdit()
+
+$('#photo-content-edit form').photoContentSubmit()
+
+$('ul.tag').photoTagHover()
+
+$('#addtag a').photoTagAdd()
+
+$('#tagadd a.cancel').photoTagAddCancel()
+
+$('#tagadd form').photoTagAddSubmit()
+
+$('#tags .close').photoTagClose()
+
+$('#photo-extra .user-meta .icon-delete').photoDelete()
+
+$('#photo-extra .user-meta a.cancel').photoDeleteCancel()
+
+$('#photo-delete').photoDeleteSubmit()
+
+$('#photo .toggle-fullsize').photoToggleFullsize()
+</script>

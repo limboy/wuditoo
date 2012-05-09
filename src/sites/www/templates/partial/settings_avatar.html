@@ -1,0 +1,27 @@
+<div class="box">
+    <div class="header">设置头像</div>
+    <div class="body">
+        <form action="/settings/avatar" method="POST" enctype="multipart/form-data" class="flat" target="hidden_avatar_upload" id="avatar-upload">
+            <div class="section avatar">
+                <label>当前头像</label>
+                <div class="input-single">
+                    <img src="{{get_avatar_url(current_user, 's')}}" />
+                </div>
+            </div>
+            <div class="section">
+                <label>选择一个新的头像</label>
+                <div class="input-single">
+                    <input type="FILE" name="avatar" />
+                </div>
+            </div>
+            <div class="section">
+                <div class="input-single">
+                    <input type="SUBMIT" value="上传头像" class="btn primary-btn" />
+                    <span class="success hide">头像上传成功</span>
+                    <span class="error" id="avatar-error"></span>
+                </div>
+            </div>
+        </form>
+        <IFRAME id=hidden_avatar_upload name=hidden_avatar_upload src='' style='position:absolute;width:0;height:0;border:0'></IFRAME>
+    </div>
+</div>

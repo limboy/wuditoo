@@ -1,0 +1,47 @@
+<div class="box">
+    <div class="header">我的链接</div>
+    <div class="body">
+        <form action="/settings/link" method="POST" class="flat" rel="ajax">
+            <div class="section">
+                <label>Flickr</label>
+                <div class="input-single">
+                    <input type="TEXT" name="link_flickr" value="{{profile.link_flickr}}" />
+                    <span class="error" id="link_flickr-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label>豆瓣</label>
+                <div class="input-single">
+                    <input type="TEXT" name="link_douban" value="{{profile.link_douban}}" />
+                    <span class="error" id="link_douban-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label>新浪微博</label>
+                <div class="input-single">
+                    <input type="TEXT" name="link_weibo" value="{{profile.link_weibo}}" />
+                    <span class="error" id="link_weibo-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label>腾讯微博</label>
+                <div class="input-single">
+                    <input type="TEXT" name="link_qq" value="{{profile.link_qq}}" />
+                    <span class="error" id="link_qq-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label>博客主页</label>
+                <div class="input-single">
+                    <input type="TEXT" name="link_blog" value="{{profile.link_blog}}" />
+                    <span class="error" id="link_blog-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <input type="SUBMIT" value="更新链接" class="btn primary-btn" />
+                <span class="success hide">更新成功</span>
+            </div>
+        </form>
+    </div>
+</div>
+

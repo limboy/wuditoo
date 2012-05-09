@@ -1,0 +1,10 @@
+-e git+git://github.com/lzyy/thing.git#egg=Thing
+bpython
+supervisor
+tornado
+apscheduler
+redis
+clint
+markdown
+PyRSS2Gen
+-e src

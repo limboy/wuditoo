@@ -1,0 +1,22 @@
+<div id="comments">
+    {% for comment in photo.comments %}
+    {% include 'comment.html' %}
+    {% end %}
+
+    {% if current_user %}
+    <div id="comment-create" class="comment">
+        <div class="avatar">
+            <img src="{{get_avatar_url(current_user, 's')}}" width="32" height="32" />
+        </div>
+        <div class="right">
+            <form action="/comment/add" method="POST" rel="ajax">
+                <input type="hidden" name="photo_id" value="{{photo.id}}" />
+                <input type="TEXT" name="content" />
+                <p class="tip">按回车提交评论</p>
+            </form>
+        </div>
+    </div>
+    {% end %}
+</div>
+
+

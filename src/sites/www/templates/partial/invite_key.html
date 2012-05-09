@@ -1,0 +1,17 @@
+<div class="box" id="invite_key">
+    <div class="header">我的邀请链接</div>
+    <div class="body">
+        {% for invite_key in invite_keys %}
+        <div class="column">
+            <input type="TEXT" value="http://wuditoo.com/register?invite_key={{invite_key.hash}}" {% if invite_key.used %} disabled{% end %} />
+            <span class="status">
+                {% if invite_key.used %}
+                <a href="/user/{{invite_key.consumer.username}}">{{invite_key.consumer.fullname}}</a>
+                {% else %}
+                可用
+                {% end %}
+            </span>
+        </div>
+        {% end %}
+    </div>
+</div>

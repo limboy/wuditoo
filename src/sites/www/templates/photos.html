@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% include 'partial/photos.html' %}
+{% end %}
+
+{% block sidebar %}
+{% include 'partial/sidebar_global.html' %}
+{% end %}
+
+{% block metadata %}
+<script type="text/javascript">
+{% if current_photo %}
+meta_photo = {
+    url: "/photo/{{current_photo.id}}",
+    width: {{current_photo.width}},
+    height: {{current_photo.height}}
+}
+{% end %}
+</script>
+{% end %}

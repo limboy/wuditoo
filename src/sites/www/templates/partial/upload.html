@@ -1,0 +1,99 @@
+<div class="box">
+    <div class="header">采集照片</div>
+    <div class="body">
+        <form id="photo-upload" method="POST" action="/photo" class="flat">
+            <div class="section">
+                <label for="photo">照片地址 (必填)
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="photo_source" value="{{handler.get_argument('photo_source', '')}}" />
+                    <span class="error hide" id="photo_source-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">照片所在的页面地址 (必填)
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="page_source" value="{{handler.get_argument('page_source', '')}}" />
+                    <span class="error hide" id="page_source-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">照片标题 (必填)</label>
+                <div class="input-single">
+                    <input type="TEXT" name="title" />
+                    <span class="error hide" id="title-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">照片说明</label>
+                <div class="input-single">
+                    <textarea rows="5" name="content"></textarea>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">
+                    标签(多个标签用空格分割)
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="tag" />
+                </div>
+            </div>
+
+            <div class="section">
+                <label for="photo">
+                    相机型号
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="exif_Model" value="{{handler.get_argument('model', '')}}" />
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">
+                    焦距(不用填单位)
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="exif_FocalLength" value="{{handler.get_argument('focal_length', '')}}"/>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">
+                    光圈(不用填单位)
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="exif_FNumber" value="{{handler.get_argument('aperture', '')}}"/>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">
+                    快门(不用填单位)
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="exif_ExposureTime" value="{{handler.get_argument('shutter_speed', '')}}"/>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">
+                    ISO
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="exif_ISOSpeedRatings" value="{{handler.get_argument('iso', '')}}"/>
+                </div>
+            </div>
+            <div class="section">
+                <label for="photo">
+                    镜头
+                </label>
+                <div class="input-single">
+                    <input type="TEXT" name="exif_Lens" value="{{handler.get_argument('lens', '')}}"/>
+                </div>
+            </div>
+
+            <div class="section">
+                <input type="SUBMIT" value="添加照片" class="btn primary-btn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript"> $('#photo-upload').ajaxSubmit() </script>

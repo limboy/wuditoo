@@ -1,0 +1,23 @@
+{% set commenter = comment.creator %}
+<div class="comment">
+    <div class="avatar">
+        <a href="/user/{{commenter.username}}"><img src="{{get_avatar_url(commenter, 's')}}" width="32" height="32" /></a>
+    </div>
+    <div class="right">
+        <div class="username">
+            <span class="created">{{timesince(comment.created)}}</span>
+            <a href="/user/{{commenter.username}}">{{commenter.fullname}}</a>
+            <i class="level icon-level{{commenter.level}}"></i>
+        </div>
+        <p class="content">
+        {% if current_user %}
+        {% if current_user.id == photo.user_id or current_user.is_admin %}
+        <a href="/comment/{{comment.id}}/delete" class="close hide">×</a>
+        {% end %}
+        {% end %}
+        {{comment.content}}
+        </p>
+    </div>
+</div>
+<div class="divider"></div>
+

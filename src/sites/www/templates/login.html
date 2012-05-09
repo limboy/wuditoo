@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="box" id="login">
+    <div class="header">登入无敌兔</div>
+    <div class="body">
+        <form method="POST">
+            {% if handler.get_argument('error', '') %}
+            <div class="alert alert-error">
+                {{handler.get_argument('error', '')}}
+            </div>
+            {% end %}
+            <div class="section">
+                <label for="username">用户名/Email地址</label>
+                <div class="input">
+                    <input type="TEXT" id="username" name="username" class="input-xlarge" />
+                </div>
+            </div>
+            <div class="section">
+                <label for="password">密码</label>
+                <div class="input">
+                    <input type="PASSWORD" id="password" name="password" class="input-large" />
+                </div>
+            </div>
+            <div class="section action">
+                <input class="btn primary-btn" type="SUBMIT" value="立即登入" />
+            </div>
+        </form>
+    </div>
+</div>
+{% end %}

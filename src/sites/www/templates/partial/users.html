@@ -1,0 +1,42 @@
+<div class="box" id="panel-users">
+    <div class="header">{{users_title}}</div>
+    <div class="body">
+    {% for index, user in enumerate(users) %}
+    {% if index > 0 and index % 2 == 0 %}
+    <div class="divider"></div>
+    {% end %}
+    <div class="section">
+        <div class="avatar">
+            <a href="/user/{{user.username}}"><img src="{{get_avatar_url(user, 's')}}" /></a>
+        </div>
+        <div class="user-info">
+            {% if current_user %}
+            {% if current_user.is_following(user.id) %}
+            <button class="btn mini-btn follow" data-url="/user/{{user.username}}/follow">取消关注</button>
+            {% else %}
+            <button class="btn mini-btn primary-btn follow" data-url="/user/{{user.username}}/follow">关注</button>
+            {% end %}
+            {% end %}
+
+            <div class="username">
+                <a href="/user/{{user.username}}">{{user.fullname}}</a> &nbsp;
+                <i class="icon-level{{user.level}} level"></i>
+            </div>
+
+            <div class="icon-bio"></div>
+            {% if not user.profile.bio %}
+            <div class="bio">这个家伙很懒，连介绍都没有</div>
+            {% else %}
+            <div class="bio">{{user.profile.bio[:20]}}</div>
+            {% end %}
+        </div>
+    </div>
+    {% end %}
+    {% set page_type = 'users' %}
+    {% include 'pagination.html' %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.user-info .follow').userFollow()
+</script>

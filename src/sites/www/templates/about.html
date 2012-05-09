@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% from macros.macro import USER_LEVEL, USER_LEVEL_CN, USER_LEVEL_PHOTOS_PER_WEEK, INVITE_NUM %}
+
+<div id="about">
+<h3>关于无敌兔</h3>
+<p>收录美好的照片，发现更美的世界</p>
+
+<i class="icon-bio"></i>
+<blockquote>
+我们不只是用相机拍照。
+我们带到摄影中去的是所有我们读过的书，看过的电影，听过的音乐，爱过的人。
+</blockquote>
+
+<br />
+<h3>等级与权限</h3>
+无敌兔目前共有{{len(USER_LEVEL)}}个等级(1-{{len(USER_LEVEL)}})，分别对应：{{ ','.join(USER_LEVEL_CN) }}。<br />
+
+注册完成后，默认等级为1。 升级的因素只有一个：照片被喜欢的次数。<br /><br />
+
+<b>各个等级所对应的喜欢次数如下：</b>
+
+<ul>
+{% for i in range(len(USER_LEVEL)) %}
+    <li>等级<b>{{i+1}}</b>({{USER_LEVEL_CN[i]}}): 所有照片总共被喜欢超过<b>{{USER_LEVEL[i]}}</b>次</li>
+{% end %}
+</ul>
+<br />
+
+<b>各个等级对应的权限如下：</b>
+
+<ul>
+{% for i in range(len(USER_LEVEL)) %}
+<li>等级<b>{{i+1}}</b>({{USER_LEVEL_CN[i]}}): 每周可以添加<b>{{ USER_LEVEL_PHOTOS_PER_WEEK[i] }}</b>张照片，有<b>{{INVITE_NUM[i]}}</b>个邀请名额</li>
+{% end %}
+</ul>
+
+<h3>联系作者</h3>
+<img src="http://services.nexodyne.com/email/icon/qfQvihpX79Aj/CmwTCFo%3D/R01haWw%3D/0/image.png" />
+</div>
+{% end %}

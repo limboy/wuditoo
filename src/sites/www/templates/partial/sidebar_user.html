@@ -1,0 +1,80 @@
+{% from datetime import datetime %}
+{% from macros.macro import USER_LEVEL_CN %}
+{% set user = handler.user %}
+{% set profile = user.profile %}
+
+<div class="box" id="panel-user">
+    <div class="header">
+        {% if current_user and current_user.id == user.id %}我{% else %}{{user.fullname}}{% end %}的信息</div>
+    <div class="body">
+        <img class="avatar" src="{{get_avatar_url(user, 'l')}}" />
+        <h3>{{user.fullname}}</h3>
+        <i class="icon-level{{user.level}}" title="{{USER_LEVEL_CN[user.level]}}"></i>
+        <p class="clearfix"></p>
+        <p class="meta">第{{user.id}}号会员，{{datetime.fromtimestamp(user.created).strftime('%Y-%m-%d')}}加入</p>
+        {% if not current_user %}
+        <a href="/login" class="btn primary-btn" id="follow">关注</a>
+        {% else %}
+        {% if current_user.id == user.id %}
+        {% elif not current_user.is_following(user.id) %}
+        <button data-url="/user/{{user.username}}/follow" id="follow" class="btn primary-btn">关注</button>
+        {% else %}
+        <button data-url="/user/{{user.username}}/follow" id="follow" class="btn">取消关注</button>
+        {% end %}
+        {% end %}
+
+        {% if profile.camera or profile.lens or profile.link_weibo or profile.link_qq or profile.link_douban or profile.link_flickr or profile.link_blog or profile.bio %}
+        <p class="divider"></p>
+        {% end %}
+
+        {% if profile.camera %}
+        <p class="param">常用相机：{{profile.camera}}</p>
+        {% end %}
+        {% if profile.lens %}
+        <p class="param">常用镜头：{{profile.lens}}</p>
+        {% end %}
+
+        {% if profile.link_weibo or profile.link_qq or profile.link_douban or profile.link_flickr or profile.link_blog %}
+        <p class="param">网上据点：
+        {% if profile.link_weibo %}
+        <a href="{{profile.link_weibo}}" target="_blank">新浪微博</a>
+        {% end %}
+        {% if profile.link_qq %}
+        <a href="{{profile.link_qq}}" target="_blank">腾讯微博</a>
+        {% end %}
+        {% if profile.link_douban %}
+        <a href="{{profile.link_douban}}" target="_blank">豆瓣</a>
+        {% end %}
+        {% if profile.link_flickr %}
+        <a href="{{profile.link_flickr}}" target="_blank">Flickr</a>
+        {% end %}
+        {% if profile.link_blog %}
+        <a href="{{profile.link_blog}}" target="_blank">博客</a>
+        {% end %}
+        </p>
+        {% end %}
+
+        {% if profile.bio %}
+        <div class="bio">
+            <div class="icon-bio"></div>
+            <div class="content">{{profile.bio}}</div>
+        </div>
+        {% end %}
+
+        <p class="divider"></p>
+        <div class="data">
+            <div class="item" data-url="/user/{{user.username}}/photos">
+                <h4>{{user.photo_count}}</h4>
+                <p>Photos</p>
+            </div>
+            <div class="item" data-url="/user/{{user.username}}/following">
+                <h4>{{user.following_count}}</h4>
+                <p>Following</p>
+            </div>
+            <div class="item" data-url="/user/{{user.username}}/follower">
+                <h4>{{user.follower_count}}</h4>
+                <p>Followers</p>
+            </div>
+        </div>
+    </div>
+</div>

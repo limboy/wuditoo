@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-decorate-left">
+    <img src="/static/img/login-left.jpg" />
+</div>
+<div class="box" id="register">
+    <div class="header">注册成为无敌兔会员</div>
+    <div class="body">
+        <form method="POST" rel="ajax">
+            <div class="section">
+                <label for="email">Email地址</label>
+                <div class="input">
+                    <input type="TEXT" id="email" name="email" class="input-xlarge" />
+                </div>
+                <span class="error" id="email-error"></span>
+            </div>
+            <div class="section">
+                <label for="username">用户名</label>
+                <div class="input">
+                    <input type="TEXT" id="username"  name="username" class="input-large" />
+                </div>
+                <span class="error" id="username-error"></span>
+            </div>
+            <div class="section">
+                <label for="password">密码</label>
+                <div class="input">
+                    <input type="PASSWORD" id="password" name="password" class="input-large" />
+                </div>
+                <span class="error" id="password-error"></span>
+            </div>
+            <div class="section">
+                <label for="password_confirm">密码确认</label>
+                <div class="input">
+                    <input type="PASSWORD" id="password_confirm" name="password_confirm" class="input-large" />
+                </div>
+                <span class="error" id="password_confirm-error"></span>
+            </div>
+            <div class="section action">
+                <input type="hidden" name="invite_key" value="{{invite_key}}" />
+                <input class="btn primary-btn" type="SUBMIT" value="注册会员" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="login-decorate-right">
+    <img src="/static/img/login-right.jpg" />
+</div>
+
+<script type="text/javascript">
+$('form[rel="ajax"]').ajaxSubmit();
+</script>
+{% end %}

@@ -1,0 +1,36 @@
+<div class="box">
+    <div class="header">基本信息</div>
+    <div class="body">
+        <form action="/settings/profile" method="POST" class="flat" rel="ajax">
+            <div class="section">
+                <label> 昵称 <p class="tip">不超过12个字符</p> </label>
+                <div class="input">
+                    <input type="TEXT" name="fullname" value="{{current_user.fullname}}" />
+                    <span class="error" id="fullname-error"></span>
+                </div>
+            </div>
+            <div class="section">
+                <label> 常用相机 <p class="tip">多个相机用","分割</p> </label>
+                <div class="input">
+                    <input type="TEXT" name="camera" value="{{profile.camera}}" />
+                </div>
+            </div>
+            <div class="section">
+                <label> 常用镜头 <p class="tip">多个镜头用","分割</p> </label>
+                <div class="input">
+                    <input type="TEXT" name="lens" value="{{profile.lens}}" />
+                </div>
+            </div>
+            <div class="section">
+                <label> 关于我 <p class="tip">让大家能更好地了解你</p> </label>
+                <div class="textarea">
+                    <textarea rows="3" name="bio">{{profile.bio}}</textarea>
+                </div>
+            </div>
+            <div class="section">
+                <input type="SUBMIT" value="更新资料" class="btn primary-btn" />
+                <span class="success hide">更新成功</span>
+            </div>
+        </form>
+    </div>
+</div>

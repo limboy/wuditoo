@@ -1,0 +1,42 @@
+<div class="box" id="photos">
+	<div class="header">{{photos_title}}</div>
+	<div class="body main ul">
+		{% for index, photo in enumerate(photos) %}
+        {% set creator = photo.creator %}
+		<div class="photo-item">
+			<div class="header">
+				<a class="avatar" href="/user/{{creator.username}}"><img src="{{get_avatar_url(creator, 's')}}" /></a>{{photo.title}}
+			</div>
+			<div class="body">
+                <a class="fancybox" data-url="/photo/{{photo.id}}/via/{{photos_type}}" data-index={{index}} data-title="{{photo.title}} - 无敌兔" data-fancybox-type='ajax' data-photo-width="{{photo.width}}" data-photo-height="{{photo.height}}" href="/photo/{{photo.id}}?url=http://wuditoo.com/photo/{{photo.id}}/via/{{photos_type}}"> <img src="{{get_photo_url(photo, 'm')}}" /> </a>
+			</div>
+			<div class="footer">
+				<span class="meta">
+					<ul>
+						<li><i class="icon-view"></i> {{photo.views_count}}</li>
+						<li><i class="icon-like"></i> {{photo.likes_count}}</li>
+						<li><i class="icon-comment"></i> {{photo.comments_count}}</li>
+					</ul>
+				</span>
+				<span class="created">
+                    {{timesince(photo.created)}}
+                    {% if photo.page_source %}
+                    <a href="{{photo.page_source}}" target="_blank"><i class="icon-anchor"></i></a>
+                    {% end %}
+				</span>
+			</div>
+		</div>
+        {# fuck ie #}
+        {% if index > 0 and (index + 1) % 3 == 0 %}
+        <div class="clearfix"></div>
+        {% end %}
+
+		{% end %}
+        {% set page_type = 'photos' %}
+        {% include 'pagination.html' %}
+	</div>
+</div>
+
+<script type="text/javascript">
+    $('#photos a.fancybox').photosFancy();
+</script>

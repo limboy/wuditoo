@@ -1,0 +1,46 @@
+{# this component need `page_path` and `total_items` #}
+
+{% from macros.macro import PHOTOS_PER_PAGE, USERS_PER_PAGE%}
+{% import math %}
+
+{% if page_type == 'photos' %}
+{% set items_per_page = PHOTOS_PER_PAGE %}
+{% else %}
+{% set items_per_page = USERS_PER_PAGE %}
+{% end %}
+
+{% set total_page = int(math.ceil(float(total_items) / items_per_page)) %}
+
+{% set current_page = int(handler.get_argument('page', 1)) %}
+
+{% if current_page <=6 %}
+{% set end_page = min(total_page, 10) %}
+{% set start_page = 1 %}
+{% else %}
+{% set end_page = min(total_page, current_page+4) %}
+{% set start_page = current_page - 5 %}
+{% end %}
+
+{% if total_page > 1 %}
+<div class="pagination">
+<ul>
+    {% if current_page == 1 %}
+    <li class="disabled">← </li>
+    {% else %}
+    <li><a href="{{page_path}}?page=1">← </a></li>
+    {% end %}
+
+{% for i in range(start_page, end_page + 1) %}
+<li {% if current_page == i %}class="active"{%end%}>
+<a href="{{page_path}}?page={{i}}">{{i}}</a>
+</li>
+{% end %}
+
+    {% if current_page == total_page %}
+    <li class="disabled">→ </li>
+    {% else %}
+    <li><a href="{{page_path}}?page={{current_page+1}}">→ </a></li>
+    {% end %}
+</ul>
+</div>
+{% end %}

@@ -1,0 +1,99 @@
+{% extends '../base.html' %}
+
+{% block main %}
+{% if current_user and current_user.is_admin %}
+<div class="box hide" id="blog-create">
+    <div class="header">添加日志</div>
+    <div class="body">
+        <form action="/blog" method="POST" class="flat">
+            <div class="section">
+                <label>标题</label>
+                <div class="input-single">
+                    <input type="TEXT" name="title" />
+                </div>
+            </div>
+            <div class="section">
+                <label>内容</label>
+                <div class="input-single">
+                    <textarea name="content" rows="20"></textarea>
+                </div>
+            </div>
+            <div class="section">
+                <input type="SUBMIT" value="添加日志" class="btn primary-btn" />
+            </div>
+        </form>
+    </div>
+</div>
+{% end %}
+<div id="blog">
+    {% if blog %}
+    <span class="created">{{timesince(blog.created)}}</span>
+    <h3>{{blog.title}}</h3>
+    <div class="entry">
+        {% raw blog.content %}
+    </div>
+    {% end %}
+</div>
+
+{% if blog %}
+<div class="box" id="blog-comments">
+    <div class="header">兔友评论</div>
+    <div class="body">
+        {% for comment in blog_comments %}
+        {% set creator = comment.creator %}
+        <div class="comment">
+            <div class="avatar"><a href="/user/{{creator.username}}"><img src="{{get_avatar_url(creator, 's')}}" width="48" height="48" /></a></div>
+            <div class="content">
+                <div class="right-top"> {{timesince(comment.created)}} </div>
+                <div class="left-top"><a href="/user/{{creator.username}}">{{creator.fullname}}</a> <i class="level icon-level{{creator.level}}"></i></div>
+                <div class="middle">{{nl2br(comment.content)}}</div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        {% end %}
+
+        {% if current_user %}
+        <div class="comment">
+            <div class="avatar"><a href="/user/{{current_user.username}}"><img src="{{get_avatar_url(current_user, 's')}}" width="48" height="48" /></a></div>
+            <div class="content">
+                <form action="/blog/{{blog.id}}/comment" method="POST" id="blog-comment-create">
+                    <p><TEXTAREA name="content"></TEXTAREA></p>
+                    <input type="SUBMIT" class="btn primary-btn" value="添加评论" />
+                </form>
+            </div>
+        </div>
+        {% end %}
+    </div>
+</div>
+{% end %}
+{% end %}
+
+{% block sidebar %}
+{% if current_user and current_user.is_admin %}
+<div class="upload" id="create-blog">
+    <div class="left"></div>
+    <div class="center">发表日志</div>
+    <div class="right"></div>
+</div>
+{% end %}
+<div class="box">
+    <div class="header">所有日志</div>
+    <div class="body">
+        <ul>
+            {% for _blog in blogs %}
+            <li><a href="/blog/{{_blog.id}}">{{_blog.title}}</a></li>
+            {% end %}
+        </ul>
+    </div>
+</div>
+{% end %}
+
+{% block metadata %}
+<script type="text/javascript">
+    $(function(){
+        $('#create-blog').on('click', function(e){
+            $('#blog-create').toggle();
+        });
+    })
+</script>
+{% end %}

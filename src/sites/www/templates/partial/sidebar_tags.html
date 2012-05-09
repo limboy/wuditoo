@@ -1,0 +1,13 @@
+{% import models %}
+{% set hot_tags = models.Photo_Tag().hot_tags %}
+
+<div class="box" id="panel-tags">
+    <div class="header">热门标签</div>
+    <div class="body">
+        <ul>
+            {% for tag in hot_tags %}
+            <li class="item" data-url="/tag/{{tag}}"><i class="icon-tag"></i><span class="anchor">{{tag}}</span></li>
+            {% end %}
+        </ul>
+    </div>
+</div>
