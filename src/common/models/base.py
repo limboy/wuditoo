@@ -2,11 +2,12 @@ import logging
 
 import thing
 import json
+from config.database import get_db_config
 from tornado.options import define, options
 from macros.macro import REDIS_KEY
 from utils import get_redis_client, attr_dict
 
-thing.Thing.db_config(options.db_config)
+thing.Thing.db_config(get_db_config())
 
 class BaseThing(thing.Thing):
     def set_attr_by_req(self, arguments, *args):

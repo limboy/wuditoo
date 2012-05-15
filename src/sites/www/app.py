@@ -5,8 +5,9 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 from tornado.options import define, options
-
 import config
+tornado.options.parse_command_line()
+
 import helpers
 import routes
 
@@ -41,7 +42,6 @@ def profile_patch():
     tornado.web.RequestHandler._execute = wrapper(old_execute)
 
 if __name__ == "__main__":
-    tornado.options.parse_command_line()
     profile_patch()
     app = create_app()
     app.listen(options.port)
