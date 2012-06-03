@@ -70,11 +70,12 @@ class Photo(models.base.BaseThing):
 
     @photo_after_validation.connect
     def _photo_after_validation(photo):
-        hashval = process_photo_url(photo.photo_source, photo.user_id)
-        if not hashval:
-            photo.add_error(photo_source = u'此链接无法被抓取')
-        else:
-            photo.hash = hashval
+        if not photo.id:
+            hashval = process_photo_url(photo.photo_source, photo.user_id)
+            if not hashval:
+                photo.add_error(photo_source = u'此链接无法被抓取')
+            else:
+                photo.hash = hashval
 
     @photo_like.connect
     def _photo_like(photo_like):

@@ -34,7 +34,7 @@
 
     <div id="container">
 		<div class="inner">
-			<div class="message alert alert-info">无敌兔近期会有调整，敬请关注:)</div>
+			<div class="message alert alert-warn">无敌兔冬眠中，苏醒时间待定。谢谢您的到访：）</div>
 			{% set message = get_message() %}
 			{% for message_type in ('error', 'success', 'info', 'warn') %}
 				{% if message and message_type == message[0] %}
