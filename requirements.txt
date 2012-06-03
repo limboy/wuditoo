@@ -1,7 +1,7 @@
 -e git+git://github.com/lzyy/thing.git#egg=Thing
 bpython
 supervisor
-tornado
+tornado=2.2.1
 apscheduler
 redis
 clint
